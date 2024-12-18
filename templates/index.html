@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Score Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 120px auto 40px;
+            padding: 0 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.8s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            animation: slideUp 0.5s ease;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            animation: slideRight 0.5s ease;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2a5298;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5ea;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #1e3c72;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30,60,114,0.3);
+        }
+
+        .result {
+            margin-top: 2rem;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1e3c72;
+            background: rgba(30,60,114,0.1);
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideRight {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h2>StudentPredict</h2>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Predict Student Pretest Score</h1>
+            <form id="predictionForm">
+                <div class="form-group">
+                    <label for="school">School</label>
+                    <select id="school" name="school" required>
+                        <!-- JavaScript sẽ tự động thêm tùy chọn -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="school_setting">School Setting</label>
+                    <select id="school_setting" name="school_setting" required>
+                        <option value="Urban">Urban</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Suburban">Suburban</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="school_type">School Type</label>
+                    <select id="school_type" name="school_type" required>
+                        <option value="Public">Public</option>
+                        <option value="Non-public">Non-public</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="teaching_method">Teaching Method</label>
+                    <select id="teaching_method" name="teaching_method" required>
+                        <option value="Standard">Standard</option>
+                        <option value="Experimental">Experimental</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="n_student">Number of Students</label>
+                    <input type="number" id="n_student" name="n_student" placeholder="Enter number of students" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lunch">Lunch Qualification</label>
+                    <select id="lunch" name="lunch" required>
+                        <option value="Does not qualify">Does not qualify</option>
+                        <option value="Qualifies for reduced/free lunch">Qualifies for reduced/free lunch</option>
+                    </select>
+                </div>
+
+                <button type="submit">Predict Score</button>
+            </form>
+
+            <div class="result" id="result"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StudentPredict. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Fetch list of schools and populate dropdown
+        fetch('/get_schools')
+            .then(response => response.json())
+            .then(data => {
+                const schoolDropdown = document.getElementById('school');
+                data.schools.forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school;
+                    option.textContent = school;
+                    schoolDropdown.appendChild(option);
+                });
+            });
+
+        // Handle form submission
+        const form = document.getElementById('predictionForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            resultDiv.textContent = `Predicted Pretest Score: ${result.predicted_pretest_score.toFixed(2)}`;
+            resultDiv.style.animation = 'none';
+            resultDiv.offsetHeight; // Trigger reflow
+            resultDiv.style.animation = 'fadeIn 0.5s ease';
+        });
+    </script>
+</body>
+</html>
